@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Konflik Sosial (Sosiologi Kelas 11)</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Konfigurasi Tailwind untuk font Inter dan warna dasar -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sosiologi-primary': '#4F46E5', // Indigo-600
+                        'sosiologi-light': '#EEF2FF', // Indigo-50
+                        'sosiologi-dark': '#1E293B', // Slate-800
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Mengatur scrollbar agar lebih halus */
+        .content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+        .content-area::-webkit-scrollbar-thumb {
+            background-color: #A5B4FC; /* Indigo-300 */
+            border-radius: 4px;
+        }
+        .content-area::-webkit-scrollbar-track {
+            background-color: #EEF2FF; /* Indigo-50 */
+        }
+        
+        /* Style untuk tab aktif */
+        .tab-button.active {
+            @apply bg-sosiologi-light border-sosiologi-primary text-sosiologi-primary font-semibold shadow-inner;
+        }
+
+        /* Styling umum untuk card konten */
+        .content-card {
+            @apply bg-white p-6 md:p-8 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl border border-gray-100;
+        }
+
+        /* Styling untuk kuis/latihan */
+        .quiz-option {
+            @apply block w-full text-left p-3 my-2 rounded-lg border-2 border-indigo-200 bg-white hover:bg-indigo-50 transition duration-150 cursor-pointer;
+        }
+        /* Style untuk MCMA (Multiple Answer) */
+        .quiz-option.mcma-selected {
+            @apply bg-indigo-100 border-indigo-500 font-medium;
+        }
+
+        .quiz-option.correct {
+            @apply bg-green-100 border-green-500 text-green-800 font-bold;
+        }
+        .quiz-option.incorrect {
+            @apply bg-red-100 border-red-500 text-red-800 font-bold;
+        }
+
+        /* Styling untuk Soal Kategori */
+        .categorical-option {
+            @apply px-3 py-1 rounded-md text-sm border transition duration-150 cursor-pointer;
+        }
+        .categorical-option.selected {
+            @apply bg-sosiologi-primary text-white border-sosiologi-primary;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans">
+
+    <!-- Header -->
+    <header class="bg-sosiologi-primary shadow-md py-4 md:py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-2xl md:text-3xl font-extrabold text-white text-center">
+                Konflik Sosial (Sosiologi Kelas 11)
+            </h1>
+            <!-- Penambahan nama pembuat media di bawah judul -->
+            <p class="text-white text-opacity-80 text-center mt-1 text-sm">Media Pembelajaran Interaktif oleh **Yuni Sudiasih**</p>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl mx-auto w-full p-4 sm:p-6 lg:p-8">
+        <div class="flex flex-col lg:flex-row gap-6">
+
+            <!-- Sidebar Navigasi (Menu) -->
+            <nav class="lg:w-1/4">
+                <div class="bg-white rounded-xl shadow-xl p-4 sticky top-4">
+                    <h2 class="text-lg font-bold text-sosiologi-dark mb-4 border-b pb-2">Daftar Isi</h2>
+                    <div class="flex flex-wrap lg:flex-col gap-2" id="nav-tabs">
+                        <!-- Tombol-tombol navigasi akan diisi oleh JavaScript -->
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Content Area -->
+            <div class="lg:w-3/4 content-area overflow-y-auto" id="content-display">
+                <!-- Konten akan dimuat di sini -->
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-4 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-500">
+            &copy; 2024 Media Pembelajaran Interaktif Sosiologi. Selamat Belajar!
+        </div>
+    </footer>
+
+    <script>
+        // Data Materi dan Kuis
+        const materials = [
+            { id: 'definisi', title: '1. Pengertian Konflik', content: `
+                <div class="content-card">
+                    <h2 class="text-2xl font-bold text-sosiologi-primary mb-4">Pengertian Konflik Sosial</h2>
+                    <p class="text-gray-700 mb-4">Secara umum, **konflik sosial** adalah suatu proses sosial di mana orang perorangan atau kelompok manusia berusaha mencapai tujuannya dengan jalan menentang pihak lain disertai ancaman dan/atau kekerasan.</p>
+                    
+                    <div class="bg-indigo-50 p-4 rounded-lg border-l-4 border-sosiologi-primary">
+                        <p class="font-semibold text-sosiologi-dark mb-2">Menurut Selo Soemardjan:</p>
+                        <p class="text-gray-700 italic">Konflik adalah perjuangan untuk mendapatkan hal-hal yang berharga, seperti status, kekuasaan, dan sumber daya, di mana tujuannya tidak hanya memperoleh keuntungan tetapi juga menundukkan saingan.</p>
+                    </div>
+                    
+                    <p class="text-gray-700 mt-4">Intinya, konflik mencerminkan adanya perbedaan, pertentangan, dan upaya untuk saling menyingkirkan atau menguasai. Konflik tidak selalu negatif, karena dapat menjadi pendorong perubahan.</p>
+                </div>
+            ` },
+            { id: 'faktor', title: '2. Faktor Penyebab Konflik', content: `
+                <div class="content-card">
+                    <h2 class="text-2xl font-bold text-sosiologi-primary mb-4">Faktor Penyebab Konflik Sosial</h2>
+                    <p class="text-gray-700 mb-6">Konflik timbul karena adanya hal-hal yang tidak sejalan antara satu pihak dengan pihak lainnya. Beberapa faktor utamanya meliputi:</p>
+                    
+                    <ul class="space-y-4">
+                        <li class="p-3 bg-gray-50 rounded-lg border-l-4 border-yellow-500 shadow-sm">
+                            <span class="font-bold text-sosiologi-dark">Perbedaan Individu:</span> Meliputi perbedaan pendirian atau perasaan. Setiap orang memiliki karakter, emosi, dan kebutuhan yang berbeda.
+                        </li>
+                        <li class="p-3 bg-gray-50 rounded-lg border-l-4 border-green-500 shadow-sm">
+                            <span class="font-bold text-sosiologi-dark">Perbedaan Kebudayaan:</span> Dipengaruhi oleh nilai dan norma yang berbeda dari kelompok masyarakat yang berbeda pula. Apa yang dianggap benar oleh satu kelompok, bisa jadi salah bagi kelompok lain.
+                        </li>
+                        <li class="p-3 bg-gray-50 rounded-lg border-l-4 border-red-500 shadow-sm">
+                            <span class="font-bold text-sosiologi-dark">Perbedaan Kepentingan:</span> Baik kepentingan ekonomi, politik, maupun sosial, yang seringkali bersifat terbatas sehingga memicu persaingan antar kelompok.
+                        </li>
+                        <li class="p-3 bg-gray-50 rounded-lg border-l-4 border-blue-500 shadow-sm">
+                            <span class="font-bold text-sosiologi-dark">Perubahan Sosial yang Cepat:</span> Perubahan dalam norma, nilai, atau tatanan sosial yang mendadak dapat menyebabkan **disorganisasi sosial**, di mana orang gagal beradaptasi.
+                        </li>
+                    </ul>
+                </div>
+            ` },
+            { id: 'bentuk', title: '3. Bentuk-Bentuk Konflik', content: `
+                <div class="content-card">
+                    <h2 class="text-2xl font-bold text-sosiologi-primary mb-4">Bentuk-Bentuk Konflik Sosial</h2>
+                    <p class="text-gray-700 mb-6">Konflik dapat diklasifikasikan berdasarkan berbagai kriteria:</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white p-5 rounded-lg shadow-md border border-indigo-100">
+                            <h3 class="font-bold text-xl text-sosiologi-dark mb-2">Berdasarkan Posisi Pelaku</h3>
+                            
+                            <!-- Konflik Vertikal -->
+                            <div class="mb-4">
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                    <li>
+                                        **Konflik Vertikal:** Antara individu atau kelompok dalam hierarki yang berbeda (misalnya, atasan vs. bawahan).
+                                        <div class="mt-2 w-full h-32 bg-indigo-50 flex items-center justify-center rounded-lg overflow-hidden border border-indigo-200 p-4">
+                                            <!-- SVG Ilustrasi Konflik Vertikal (Hierarki) -->
+                                            <svg width="100%" height="100%" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                                <!-- Latar Belakang Garis Hierarki -->
+                                                <rect x="0" y="0" width="300" height="120" fill="#EEF2FF"/>
+                                                
+                                                <!-- Pihak Atas (Besar, Kuasa) -->
+                                                <circle cx="150" cy="30" r="20" fill="#4F46E5"/>
+                                                <text x="150" y="35" font-family="Inter" font-size="12" text-anchor="middle" fill="white">Atasan</text>
+                                                
+                                                <!-- Garis Konflik/Koneksi -->
+                                                <line x1="150" y1="50" x2="150" y2="70" stroke="#4F46E5" stroke-width="3" stroke-dasharray="5,5"/>
+                                                <text x="160" y="65" font-family="Inter" font-size="12" fill="#EF4444">Konflik</text>
+                                                
+                                                <!-- Pihak Bawah (Kecil, Lemah) -->
+                                                <circle cx="150" cy="90" r="15" fill="#93C5FD"/>
+                                                <text x="150" y="95" font-family="Inter" font-size="10" text-anchor="middle" fill="#1E293B">Bawahan</text>
+                                                
+                                            </svg>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Konflik Horizontal -->
+                            <div class="mb-4">
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                    <li>
+                                        **Konflik Horizontal:** Antara individu atau kelompok yang memiliki kedudukan yang sejajar/sama (misalnya, antar suku, antar organisasi sejenis).
+                                        <div class="mt-2 w-full h-32 bg-indigo-50 flex items-center justify-center rounded-lg overflow-hidden border border-indigo-200 p-4">
+                                            <!-- SVG Ilustrasi Konflik Horizontal (Sejajar) -->
+                                            <svg width="100%" height="100%" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                                <rect x="0" y="0" width="300" height="120" fill="#EEF2FF"/>
+                                                
+                                                <!-- Pihak A -->
+                                                <rect x="40" y="40" width="80" height="40" rx="5" fill="#2563EB"/>
+                                                <text x="80" y="65" font-family="Inter" font-size="14" text-anchor="middle" fill="white">Kelompok A</text>
+                                                
+                                                <!-- Tanda Pertentangan -->
+                                                <text x="150" y="65" font-family="Inter" font-size="20" text-anchor="middle" fill="#EF4444">↔️</text>
+
+                                                <!-- Pihak B -->
+                                                <rect x="180" y="40" width="80" height="40" rx="5" fill="#9333EA"/>
+                                                <text x="220" y="65" font-family="Inter" font-size="14" text-anchor="middle" fill="white">Kelompok B</text>
+                                            </svg>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Konflik Diagonal -->
+                            <div class="mb-4">
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                    <li>
+                                        **Konflik Diagonal:** Konflik yang disebabkan ketidakmerataan alokasi sumber daya ke seluruh wilayah atau kelompok.
+                                        <div class="mt-2 w-full h-32 bg-indigo-50 flex items-center justify-center rounded-lg overflow-hidden border border-indigo-200 p-4">
+                                            <!-- SVG Ilustrasi Konflik Diagonal (Ketidakmerataan Sumber Daya) -->
+                                            <svg width="100%" height="100%" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                                <rect x="0" y="0" width="300" height="120" fill="#EEF2FF"/>
+                                                
+                                                <!-- Wadah Sumber Daya Besar (Pusat) -->
+                                                <rect x="100" y="20" width="100" height="30" rx="5" fill="#FBBF24"/>
+                                                <text x="150" y="40" font-family="Inter" font-size="12" text-anchor="middle" fill="#78350F">Sumber Daya</text>
+                                                
+                                                <!-- Panah Besar (Alokasi Banyak) -->
+                                                <polyline points="150,50 220,70" stroke="#F59E0B" stroke-width="5" fill="none"/>
+                                                <text x="225" y="90" font-family="Inter" font-size="12" fill="#4B5563">Wilayah Kaya (Banyak)</text>
+
+                                                <!-- Panah Kecil (Alokasi Sedikit) -->
+                                                <polyline points="150,50 80,70" stroke="#F59E0B" stroke-width="2" fill="none"/>
+                                                <text x="50" y="90" font-family="Inter" font-size="12" fill="#4B5563">Wilayah Miskin (Sedikit)</text>
+                                            </svg>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-lg shadow-md border border-indigo-100">
+                            <h3 class="font-bold text-xl text-sosiologi-dark mb-2">Berdasarkan Sifatnya</h3>
+                            
+                            <!-- Konflik Destruktif -->
+                            <div class="mb-4">
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                    <li>
+                                        **Konflik Destruktif:** Konflik yang muncul karena perasaan tidak senang, dendam, dan bertujuan menghancurkan pihak lain.
+                                        <div class="mt-2 w-full h-32 bg-indigo-50 flex items-center justify-center rounded-lg overflow-hidden border border-indigo-200 p-4">
+                                            <!-- SVG Ilustrasi Konflik Destruktif (Merusak) -->
+                                            <svg width="100%" height="100%" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                                <rect x="0" y="0" width="300" height="120" fill="#EEF2FF"/>
+                                                
+                                                <!-- Sosok A marah dan rusak -->
+                                                <circle cx="80" cy="60" r="30" fill="#EF4444"/>
+                                                <text x="80" y="65" font-family="Inter" font-size="18" text-anchor="middle" fill="white">😠</text>
+                                                
+                                                <!-- Garis Bentrokan/Kekerasan -->
+                                                <line x1="110" y1="60" x2="190" y2="60" stroke="#EF4444" stroke-width="5" stroke-dasharray="3,3"/>
+                                                
+                                                <!-- Sosok B marah dan rusak -->
+                                                <circle cx="220" cy="60" r="30" fill="#EF4444"/>
+                                                <text x="220" y="65" font-family="Inter" font-size="18" text-anchor="middle" fill="white">💣</text>
+                                            </svg>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Konflik Konstruktif -->
+                            <div class="mb-4">
+                                <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                    <li>
+                                        **Konflik Konstruktif:** Konflik yang muncul karena perbedaan pendapat/gagasan dan mendorong perbaikan atau peningkatan kinerja.
+                                        <div class="mt-2 w-full h-32 bg-indigo-50 flex items-center justify-center rounded-lg overflow-hidden border border-indigo-200 p-4">
+                                            <!-- SVG Ilustrasi Konflik Konstruktif (Diskusi/Membangun) -->
+                                            <svg width="100%" height="100%" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" fill="none">
+                                                <rect x="0" y="0" width="300" height="120" fill="#EEF2FF"/>
+                                                
+                                                <!-- Meja Diskusi -->
+                                                <rect x="80" y="70" width="140" height="10" rx="3" fill="#6B7280"/>
+                                                
+                                                <!-- Sosok A (Kepala) -->
+                                                <circle cx="100" cy="50" r="15" fill="#10B981"/>
+                                                <!-- Balon Gagasan A -->
+                                                <rect x="110" y="20" width="40" height="15" rx="3" fill="#34D399"/>
+                                                <text x="130" y="32" font-family="Inter" font-size="10" text-anchor="middle" fill="white">💡</text>
+                                                
+                                                <!-- Sosok B (Kepala) -->
+                                                <circle cx="200" cy="50" r="15" fill="#059669"/>
+                                                <!-- Balon Gagasan B -->
+                                                <rect x="150" y="20" width="40" height="15" rx="3" fill="#34D399"/>
+                                                <text x="170" y="32" font-family="Inter" font-size="10" text-anchor="middle" fill="white">💬</text>
+                                                
+                                                <!-- Handshake (Solusi) -->
+                                                <text x="150" y="105" font-family="Inter" font-size="20" text-anchor="middle" fill="#059669">🤝</text>
+                                            </svg>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ` },
+            { id: 'dampak', title: '4. Dampak Konflik', content: `
+                <div class="content-card">
+                    <h2 class="text-2xl font-bold text-sosiologi-primary mb-4">Dampak Positif dan Negatif Konflik Sosial</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Dampak Positif -->
+                        <div class="p-5 rounded-xl bg-green-50 border-2 border-green-300">
+                            <h3 class="font-extrabold text-2xl text-green-700 mb-3">Dampak Positif</h3>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                <li>**Meningkatkan Solidaritas:** Memperkuat rasa persatuan (solidaritas in-group) bagi kelompok yang berkonflik.</li>
+                                <li>**Memperjelas Norma:** Konflik dapat memunculkan penyesuaian kembali norma, nilai, dan hubungan sosial.</li>
+                                <li>**Pendorong Perubahan:** Menjadi alat untuk mencapai keseimbangan baru dalam masyarakat (keseimbangan dinamis).</li>
+                                <li>**Penyesuaian Struktur:** Terjadi penyesuaian ulang struktur dan organisasi yang mungkin sudah tidak berfungsi.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Dampak Negatif -->
+                        <div class="p-5 rounded-xl bg-red-50 border-2 border-red-300">
+                            <h3 class="font-extrabold text-2xl text-red-700 mb-3">Dampak Negatif</h3>
+                            <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                                <li>**Kerugian Fisik & Material:** Kerusakan harta benda dan bahkan korban jiwa.</li>
+                                <li>**Keretakan Hubungan:** Hilangnya rasa persatuan dan persaudaraan (disintegrasi sosial).</li>
+                                <li>**Perubahan Kepribadian:** Munculnya rasa curiga, kebencian, dan trauma.</li>
+                                <li>**Dominasi:** Kemenangan yang berat sebelah dari satu pihak yang kuat.</li>
+                            </ul
+                        </div>
+                    </div>
+                </div>
+            ` },
+            { id: 'penyelesaian', title: '5. Upaya Penyelesaian Konflik', content: `
+                <div class="content-card">
+                    <h2 class="text-2xl font-bold text-sosiologi-primary mb-4">Upaya Penyelesaian Konflik (Akomodasi)</h2>
+                    <p class="text-gray-700 mb-6">Akomodasi adalah upaya yang dilakukan untuk meredakan atau mengakhiri konflik tanpa menghancurkan pihak lawan. Jenis-jenis utamanya meliputi:</p>
+
+                    <dl class="space-y-4">
+                        <div class="border-b pb-2">
+                            <dt class="font-bold text-lg text-sosiologi-dark">Arbitrasi (Arbitration)</dt>
+                            <dd class="text-gray-700 ml-4">Penyelesaian konflik melalui pihak ketiga yang ditunjuk, dan **keputusannya bersifat mengikat (wajib ditaati)**.</dd>
+                        </div>
+                        <div class="border-b pb-2">
+                            <dt class="font-bold text-lg text-sosiologi-dark">Mediasi (Mediation)</dt>
+                            <dd class="text-gray-700 ml-4">Penyelesaian konflik melalui pihak ketiga (mediator) yang hanya bertindak sebagai penasihat atau juru damai. **Keputusannya tidak mengikat.**</dd>
+                        </div>
+                        <div class="border-b pb-2">
+                            <dt class="font-bold text-lg text-sosiologi-dark">Konsiliasi (Conciliation)</dt>
+                            <dd class="text-gray-700 ml-4">Mempertemukan pihak-pihak yang berkonflik untuk mencapai kesepakatan damai. Fokus pada penyusunan kesepakatan.</dd>
+                        </div>
+                        <div class="border-b pb-2">
+                            <dt class="font-bold text-lg text-sosiologi-dark">Ajudikasi (Adjudication)</dt>
+                            <dd class="text-gray-700 ml-4">Penyelesaian konflik melalui jalur hukum atau pengadilan formal.</dd>
+                        </div>
+                    </dl>
+                </div>
+            ` },
+            { id: 'resolusi', title: '6. Resolusi Konflik', content: `
+                <div class="content-card">
+                    <h2 class="text-2xl font-bold text-sosiologi-primary mb-4">Konsep Resolusi Konflik</h2>
+                    <p class="text-gray-700 mb-4">**Resolusi Konflik** lebih dari sekadar mengakhiri konflik. Ini adalah proses yang bertujuan untuk:</p>
+                    
+                    <ul class="list-disc list-inside space-y-2 text-gray-700 ml-4">
+                        <li>Mengidentifikasi dan mengatasi akar masalah (*root cause*) konflik.</li>
+                        <li>Membangun hubungan yang lebih baik dan berkelanjutan antara pihak yang berkonflik.</li>
+                        <li>Menciptakan solusi yang diterima dan berkelanjutan (*sustainable solution*).</li>
+                    </ul>
+                    
+                    <p class="text-gray-700 mt-4 p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                        Perbedaan utama: **Akomodasi** berfokus pada penghentian interaksi konflik (sementara atau permanen), sedangkan **Resolusi** berfokus pada perubahan sikap dan hubungan untuk mencegah konflik berulang.
+                    </p>
+                </div>
+            ` },
+            { id: 'referensi', title: '7. Sumber Referensi', content: `
+                <div class="content-card">
+                    <h2 class="text-2xl font-bold text-sosiologi-primary mb-4">Sumber Referensi</h2>
+                    <p class="text-gray-700 mb-4">Materi dan konsep dalam media pembelajaran ini disusun berdasarkan sumber-sumber utama Sosiologi dan Pendidikan:</p>
+                    
+                    <ul class="list-disc list-inside space-y-3 text-gray-700 ml-4">
+                        <li>Soerjono Soekanto. (2014). **Sosiologi Suatu Pengantar**. Jakarta: Rajawali Pers. (Klasik dalam konsep konflik dan akomodasi)</li>
+                        <li>Tim Sosiologi Kemendikbud. (2018). **Buku Guru dan Siswa Sosiologi SMA/MA Kelas XI Kurikulum 2013 Edisi Revisi**. Jakarta: Kementerian Pendidikan dan Kebudayaan.</li>
+                        <li>Coser, Lewis. (1956). **The Functions of Social Conflict**. Glencoe, Ill: Free Press. (Teori fungsional konflik)</li>
+                        <li>Berbagai sumber daring terpercaya mengenai resolusi konflik dan dinamika sosial kontemporer.</li>
+                    </ul>
+
+                    <div class="mt-6 p-4 bg-indigo-50 rounded-lg border-l-4 border-indigo-500">
+                        <p class="font-semibold text-sosiologi-dark">Catatan:</p>
+                        <p class="text-gray-700 text-sm">Pembelajaran yang baik selalu mendorong eksplorasi dari berbagai sumber untuk mendapatkan perspektif yang komprehensif.</p>
+                    </div>
+                </div>
+            ` },
+            { id: 'latihan', title: '8. Latihan Soal Interaktif', content: `
+                <div class="content-card">
+                    <h2 class="text-2xl font-bold text-red-600 mb-4">Latihan Soal Interaktif</h2>
+                    <p class="text-gray-700 mb-6">Uji pemahaman Anda terhadap materi Konflik Sosial. Terdapat 3 jenis soal: **Kategori** (Benar/Salah), **MCMA** (Pilih Jawaban Benar Lebih dari Satu), dan **PGB** (Pilih Satu Jawaban Tepat).</p>
+                    
+                    <div id="quiz-container" class="space-y-6">
+                        <!-- Soal akan di-render di sini -->
+                    </div>
+
+                    <button id="submit-quiz-btn" onclick="submitQuiz()" class="mt-8 w-full md:w-auto px-6 py-3 bg-red-600 text-white font-bold rounded-lg shadow-lg hover:bg-red-700 transition duration-300 transform hover:scale-105 disabled:opacity-50">
+                        Periksa Jawaban
+                    </button>
+
+                    <div id="quiz-result" class="mt-6 p-4 rounded-lg hidden">
+                        <!-- Hasil Kuis akan ditampilkan di sini -->
+                    </div>
+                </div>
+            ` },
+        ];
+
+        // Data Soal Kuis (diperbarui untuk MCMA dan Kategori)
+        const questions = [
+            // --- 5 Soal Kategori (Categorical) dengan Kasus ---
+            {
+                type: "Categorical",
+                case: `**KASUS 1:** Sejumlah buruh menuntut kenaikan upah minimum, namun ditolak manajemen. Terjadi mogok kerja massal yang bersifat non-destruktif.`,
+                question: "Analisis kasus ini berdasarkan kategori berikut:",
+                statements: [
+                    { text: "Konflik ini diklasifikasikan sebagai konflik vertikal.", answer: true, explanation: "Benar. Konflik buruh vs. manajemen melibatkan hierarki kekuasaan yang berbeda (vertikal)." },
+                    { text: "Faktor penyebab utama adalah Perbedaan Individu.", answer: false, explanation: "Salah. Faktor utamanya adalah Perbedaan Kepentingan ekonomi (upah dan laba)." },
+                    { text: "Aksi mogok kerja merupakan salah satu bentuk akomodasi konflik.", answer: false, explanation: "Salah. Mogok kerja adalah manifestasi konflik (disosiatif), bukan upaya akomodasi (asosiatif)." }
+                ]
+            },
+            {
+                type: "Categorical",
+                case: `**KASUS 2:** Dalam sebuah diskusi panel, dua sosiolog berdebat sengit mengenai teori konflik yang paling relevan untuk menjelaskan ketidaksetaraan di Indonesia. Perdebatan berakhir tanpa persetujuan, namun audiens mendapatkan banyak wawasan baru.`,
+                question: "Analisis kasus ini berdasarkan kategori berikut:",
+                statements: [
+                    { text: "Konflik ini cenderung bersifat konstruktif.", answer: true, explanation: "Benar. Konflik pendapat yang menambah wawasan dan terjadi dalam ranah intelektual adalah konstruktif." },
+                    { text: "Perdebatan ini merupakan contoh konflik horizontal.", answer: true, explanation: "Benar. Konflik terjadi antara dua sosiolog yang memiliki kedudukan keilmuan yang sejajar (horizontal)." },
+                    { text: "Dampak positif yang muncul adalah keretakan hubungan antar individu.", answer: false, explanation: "Salah. Dampak yang muncul justru positif (menambah wawasan), bukan keretakan hubungan (negatif)." }
+                ]
+            },
+            {
+                type: "Categorical",
+                case: `**KASUS 3:** Setelah konflik rasial yang menyebabkan kerusakan kota, kedua pihak sepakat menunjuk seorang hakim untuk memutuskan siapa yang bersalah dan menentukan ganti rugi yang harus dibayar.`,
+                question: "Analisis kasus ini berdasarkan kategori berikut:",
+                statements: [
+                    { text: "Upaya penyelesaian yang digunakan dalam kasus ini adalah Arbitrasi.", answer: false, explanation: "Salah. Penyelesaian melalui hakim (pengadilan) dengan keputusan mengikat adalah Ajudikasi, bukan Arbitrasi (pihak ketiga ditunjuk dan keputusannya mengikat)." },
+                    { text: "Konflik yang terjadi dikategorikan sebagai konflik destruktif.", answer: true, explanation: "Benar. Konflik rasial yang menyebabkan kerusakan kota adalah contoh konflik destruktif." },
+                    { text: "Konflik ini dapat memperjelas kembali norma sosial yang dilanggar.", answer: true, explanation: "Benar. Salah satu dampak positif konflik adalah penyesuaian/perumusan norma baru untuk mencegah konflik serupa." }
+                ]
+            },
+            {
+                type: "Categorical",
+                case: `**KASUS 4:** Konflik perebutan lahan terjadi antara masyarakat adat dan perusahaan tambang. Masyarakat adat merasa hak ulayat mereka diabaikan oleh izin yang dikeluarkan pemerintah.`,
+                question: "Analisis kasus ini berdasarkan kategori berikut:",
+                statements: [
+                    { text: "Konflik ini dapat diklasifikasikan sebagai konflik diagonal.", answer: true, explanation: "Benar. Kasus ini melibatkan ketidakmerataan alokasi sumber daya dan kekuasaan antara masyarakat, perusahaan, dan pemerintah (diagonal)." },
+                    { text: "Perbedaan kebudayaan (nilai adat vs. nilai industri) turut menjadi faktor penyebab.", answer: true, explanation: "Benar. Konflik ini tidak hanya soal kepentingan, tetapi juga nilai-nilai budaya yang bertentangan dengan nilai ekonomi industri." },
+                    { text: "Jika perusahaan menang mutlak, ini adalah contoh dari upaya resolusi konflik.", answer: false, explanation: "Salah. Kemenangan mutlak pihak yang kuat adalah Koersi, bukan Resolusi Konflik (yang mencari solusi akar masalah)." }
+                ]
+            },
+            {
+                type: "Categorical",
+                case: `**KASUS 5:** Risa, seorang pelajar pindahan, merasa dirinya dijauhi oleh teman-teman sekelasnya karena ia memiliki gaya bicara dan logat yang berbeda. Risa merasa tertekan dan akhirnya meminta pindah sekolah lagi.`,
+                question: "Analisis kasus ini berdasarkan kategori berikut:",
+                statements: [
+                    { text: "Faktor penyebab konflik ini adalah perbedaan kebudayaan.", answer: true, explanation: "Benar. Perbedaan logat dan gaya bicara adalah unsur kebudayaan yang dapat memicu konflik antar-individu." },
+                    { text: "Dampak yang dialami Risa termasuk perubahan kepribadian negatif (tekanan psikologis).", answer: true, explanation: "Benar. Tekanan psikologis dan trauma adalah dampak negatif konflik yang menyerang kepribadian individu." },
+                    { text: "Konflik yang dialami Risa dapat dikategorikan sebagai konflik vertikal.", answer: false, explanation: "Salah. Konflik terjadi antar individu yang sejajar (pelajar), sehingga lebih tepat disebut konflik horizontal atau antar-individu." }
+                ]
+            },
+
+            // --- 5 Soal MCMA (Multiple Choice Multiple Answer) dengan Kasus ---
+            {
+                type: "MCMA",
+                case: `**KASUS 6:** Konflik antar-kampus X dan Y pecah kembali. Kedua belah pihak terlibat bentrokan fisik yang menyebabkan beberapa fasilitas umum rusak dan dua mahasiswa terluka.`,
+                question: "Pilihlah klasifikasi konflik dan dampaknya yang paling tepat! (Jawaban Benar Lebih Dari Satu)",
+                options: [
+                    "Konflik Horizontal",
+                    "Konflik Destruktif",
+                    "Mendorong peningkatan solidaritas in-group",
+                    "Konflik Vertikal",
+                    "Menciptakan kerugian fisik dan material"
+                ],
+                answer: ["Konflik Horizontal", "Konflik Destruktif", "Menciptakan kerugian fisik dan material"],
+                explanation: "Konflik antar kampus adalah **Horizontal**. Karena terjadi bentrokan fisik dan perusakan, ia bersifat **Destruktif** dan menimbulkan **Kerugian Fisik & Material**."
+            },
+            {
+                type: "MCMA",
+                case: `**KASUS 7:** Sebuah kebijakan pemerintah pusat menyebabkan alokasi dana pembangunan infrastruktur di Pulau Jawa jauh lebih besar daripada di pulau-pulau luar. Hal ini memicu kecemburuan sosial dan protes keras dari tokoh-tokoh masyarakat di luar Jawa.`,
+                question: "Pernyataan mana yang benar terkait jenis konflik dan faktor penyebab kasus 7? (Jawaban Benar Lebih Dari Satu)",
+                options: [
+                    "Merupakan Konflik Diagonal",
+                    "Disebabkan oleh Perbedaan Individu",
+                    "Merupakan Konflik Vertikal",
+                    "Dipicu oleh Perbedaan Kepentingan (Alokasi Sumber Daya)",
+                    "Dampak dari Disorganisasi Sosial"
+                ],
+                answer: ["Merupakan Konflik Diagonal", "Dipicu oleh Perbedaan Kepentingan (Alokasi Sumber Daya)"],
+                explanation: "Ini adalah **Konflik Diagonal** karena menyangkut ketidakmerataan sumber daya antar wilayah. Pemicunya jelas **Perbedaan Kepentingan** terkait alokasi pembangunan."
+            },
+            {
+                type: "MCMA",
+                case: `**KASUS 8:** Setelah konflik antar-suku yang melanda suatu daerah mereda, pemerintah daerah menunjuk seorang tokoh masyarakat yang dihormati kedua belah pihak untuk mendengarkan keluhan, memberikan nasihat, dan membantu merumuskan solusi damai. Namun, keputusan akhir tetap berada di tangan kedua suku yang berkonflik.`,
+                question: "Upaya penyelesaian konflik yang dilakukan pemerintah daerah tersebut mengarah pada mekanisme apa? (Jawaban Benar Lebih Dari Satu)",
+                options: [
+                    "Arbitrasi",
+                    "Mediasi",
+                    "Konsiliasi",
+                    "Ajudikasi",
+                    "Transformasi Konflik"
+                ],
+                answer: ["Mediasi", "Konsiliasi"],
+                explanation: "Penyelesaian melalui pihak ketiga yang TIDAK mengikat (nasihat/bantuan merumuskan) adalah **Mediasi**. Upaya mempertemukan pihak yang berkonflik untuk kesepakatan adalah **Konsiliasi**."
+            },
+            {
+                type: "MCMA",
+                case: `**KASUS 9:** Konflik di Timur Tengah selama puluhan tahun menyebabkan kerugian harta benda yang masif, hilangnya nyawa warga sipil, dan munculnya trauma psikologis berkepanjangan pada generasi muda.`,
+                question: "Berdasarkan kasus tersebut, pilihlah dampak negatif yang relevan! (Jawaban Benar Lebih Dari Satu)",
+                options: [
+                    "Terjadi Penyesuaian Struktur Sosial",
+                    "Menciptakan Kerugian Fisik & Material",
+                    "Munculnya Perubahan Kepribadian (Trauma)",
+                    "Meningkatnya Solidaritas in-group",
+                    "Menimbulkan Keretakan Hubungan Sosial"
+                ],
+                answer: ["Menciptakan Kerugian Fisik & Material", "Munculnya Perubahan Kepribadian (Trauma)", "Menimbulkan Keretakan Hubungan Sosial"],
+                explanation: "Dampak negatif utama adalah kerugian fisik/material, trauma/perubahan kepribadian, dan keretakan hubungan sosial (disintegrasi)."
+            },
+            {
+                type: "MCMA",
+                case: `**KASUS 10:** Beberapa warga menolak pembangunan pusat perbelanjaan baru karena khawatir akan mengurangi lapangan pekerjaan bagi pedagang kecil di pasar tradisional.`,
+                question: "Pernyataan yang paling tepat mengenai kasus ini adalah: (Jawaban Benar Lebih Dari Satu)",
+                options: [
+                    "Faktor penyebab utamanya adalah perbedaan kebudayaan.",
+                    "Merupakan konflik kepentingan antara pedagang dan investor.",
+                    "Termasuk dalam konflik konstruktif.",
+                    "Berpotensi memunculkan penyesuaian norma baru dalam tata ruang kota.",
+                    "Penyelesaian idealnya adalah melalui Arbitrasi."
+                ],
+                answer: ["Merupakan konflik kepentingan antara pedagang dan investor.", "Berpotensi memunculkan penyesuaian norma baru dalam tata ruang kota."],
+                explanation: "Faktor utamanya adalah **perbedaan kepentingan ekonomi**. Jika diselesaikan dengan baik, ia berpotensi **menciptakan penyesuaian norma baru** (dampak positif konflik)."
+            },
+
+            // --- 10 Soal PGB (Pilihan Ganda Biasa) ---
+            {
+                type: "PGB",
+                case: `**KASUS 11:** Seorang siswa membaca bahwa beberapa ahli melihat konflik sebagai upaya keras untuk mencapai hal-hal berharga (seperti kehormatan dan posisi) yang sekaligus bertujuan melumpuhkan pesaing.`,
+                question: "Tokoh sosiologi yang mendefinisikan konflik dengan pandangan tersebut adalah...",
+                options: ["Karl Marx", "Emile Durkheim", "Selo Soemardjan", "Max Weber", "Auguste Comte"],
+                answer: "Selo Soemardjan",
+                explanation: "Selo Soemardjan melihat konflik sebagai perjuangan untuk nilai-nilai yang berharga, yang tujuannya untuk menundukkan lawan."
+            },
+            {
+                type: "PGB",
+                case: `**KASUS 12:** Setelah desa A dan desa B berselisih tentang batas wilayah, keduanya tiba-tiba dihadapkan pada ancaman banjir besar yang membutuhkan kerjasama cepat. Konflik batas wilayah sejenak terlupakan dan kedua desa bahu-membahu membangun tanggul.`,
+                question: "Dampak yang terjadi pada kasus di atas, dimana dua kelompok yang tadinya berkonflik menjadi bersatu karena ancaman eksternal, dikategorikan sebagai dampak positif, yaitu...",
+                options: ["Kerugian harta benda", "Keretakan hubungan", "Meningkatkan solidaritas in-group", "Perubahan kepribadian negatif", "Dominasi kelompok kuat"],
+                answer: "Meningkatkan solidaritas in-group",
+                explanation: "Salah satu fungsi positif konflik adalah memperkuat rasa persatuan kelompok di dalam pihak yang berkonflik."
+            },
+            {
+                type: "PGB",
+                case: `**KASUS 13:** Karena sengketa warisan tidak mencapai titik temu melalui musyawarah keluarga, akhirnya kedua belah pihak memutuskan membawa perkara tersebut ke Pengadilan Negeri untuk mendapatkan keputusan resmi yang mengikat.`,
+                question: "Upaya penyelesaian konflik melalui jalur hukum atau pengadilan formal seperti pada kasus di atas dikenal dengan istilah...",
+                options: ["Mediasi", "Arbitrasi", "Koersi", "Ajudikasi", "Konsiliasi"],
+                answer: "Ajudikasi",
+                explanation: "Ajudikasi (Adjudication) adalah penyelesaian konflik melalui jalur pengadilan formal."
+            },
+            {
+                type: "PGB",
+                case: `**KASUS 14:** Divisi Pemasaran dan Divisi Produksi berdebat keras mengenai desain kemasan produk baru. Perdebatan ini didasarkan pada data riset pasar yang kuat, dan pada akhirnya menghasilkan desain inovatif yang sukses di pasaran.`,
+                question: "Konflik yang muncul karena perbedaan pendapat yang mendorong perbaikan atau peningkatan kinerja, tanpa melibatkan emosi kebencian, dikategorikan sebagai...",
+                options: ["Konflik Tertutup", "Konflik Destruktif", "Konflik Konstruktif", "Konflik Antar-individu", "Konflik Realistis"],
+                answer: "Konflik Konstruktif",
+                explanation: "Konflik Konstruktif adalah konflik yang membangun dan mendorong perubahan ke arah yang lebih baik."
+            },
+            {
+                type: "PGB",
+                case: `**KASUS 15:** Pemerintah menerapkan undang-undang baru secara mendadak mengenai penggunaan media sosial yang bertentangan dengan kebiasaan lama masyarakat. Akibatnya, muncul protes dan kekacauan karena sebagian besar penduduk belum siap menerima norma baru tersebut.`,
+                question: "Perubahan nilai dan norma sosial yang terjadi secara mendadak dan cepat dapat memicu konflik karena masyarakat kesulitan beradaptasi. Konsep ini dikenal sebagai...",
+                options: ["Interaksi Disosiatif", "Akulturasi Budaya", "Disorganisasi Sosial", "Akomodasi Konsiliasi", "Asimilasi Cepat"],
+                answer: "Disorganisasi Sosial",
+                explanation: "Disorganisasi sosial terjadi ketika terjadi ketidaksesuaian antara nilai dan norma yang baru dengan kondisi sosial yang ada, menyebabkan kesulitan adaptasi."
+            },
+            {
+                type: "PGB",
+                case: `**KASUS 16:** Dalam penanganan konflik di wilayah pasca-perang, fokus utama tim perdamaian bukan hanya menghentikan tembak-menembak, tetapi juga membangun kembali kepercayaan, memperbaiki kesalahpahaman historis, dan menciptakan kondisi yang menjamin konflik tidak terulang.`,
+                question: "Prinsip utama dari upaya jangka panjang yang dilakukan tim perdamaian tersebut adalah...",
+                options: [
+                    "Memastikan kemenangan pihak yang lebih kuat", 
+                    "Mempertahankan status quo", 
+                    "Fokus pada penghentian kekerasan saja", 
+                    "Mengatasi akar masalah untuk mencegah konflik berulang", 
+                    "Menerapkan sanksi hukum segera"
+                ],
+                answer: "Mengatasi akar masalah untuk mencegah konflik berulang",
+                explanation: "Resolusi Konflik bertujuan untuk mengubah kondisi dan sikap dasar yang memicu konflik agar konflik tidak terjadi lagi di masa depan."
+            },
+            {
+                type: "PGB",
+                case: `**KASUS 17:** Pertandingan final sepak bola antar-SMA 1 dan SMA 2 memicu keributan besar antara suporter kedua sekolah tersebut. Mereka memiliki status dan kedudukan yang setara.`,
+                question: "Konflik yang melibatkan individu atau kelompok yang memiliki kedudukan yang sejajar/sama, seperti tawuran antar pelajar dari sekolah berbeda, disebut konflik...",
+                options: ["Vertikal", "Diagonal", "Antar-kelas", "Ideologis", "Horizontal"],
+                answer: "Horizontal",
+                explanation: "Konflik Horizontal terjadi antara pihak yang memiliki kedudukan sejajar/sama."
+            },
+            {
+                type: "PGB",
+                case: `**KASUS 18:** Rani dan Sinta adalah rekan kerja yang sering berselisih paham hanya karena Rani yang perfeksionis selalu mengkritik cara Sinta bekerja yang lebih santai. Mereka memiliki perbedaan temperamen dan cara pandang yang sulit disatukan.`,
+                question: "Faktor penyebab konflik yang paling mendasar dan inheren dalam setiap individu, seperti kasus Rani dan Sinta, adalah...",
+                options: ["Perbedaan Kepentingan", "Perbedaan Ras dan Suku", "Perbedaan Individu (Perasaan/Pendirian)", "Perubahan Sosial yang Cepat", "Perbedaan Status Ekonomi"],
+                answer: "Perbedaan Individu (Perasaan/Pendirian)",
+                explanation: "Perbedaan individu (seperti karakter, perasaan, atau pendirian) adalah dasar konflik yang paling elementer karena setiap orang unik."
+            },
+            {
+                type: "PGB",
+                case: `**KASUS 19:** Dua tetangga bersengketa batas pagar rumah. Mereka sepakat meminta Pak RT untuk menjadi penengah. Pak RT mendengarkan, memberikan solusi, namun menyerahkan keputusan akhir kepada kedua tetangga tersebut.`,
+                question: "Pernyataan yang paling tepat mendeskripsikan peran Pak RT dalam konteks penyelesaian konflik tersebut adalah...",
+                options: [
+                    "Keputusan pihak ketiga bersifat mengikat",
+                    "Penyelesaian dilakukan melalui pengadilan",
+                    "Pihak ketiga hanya memberi saran dan memfasilitasi",
+                    "Pihak yang berkonflik dipaksa untuk berdamai",
+                    "Penyelesaian dilakukan tanpa melibatkan pihak ketiga"
+                ],
+                answer: "Pihak ketiga hanya memberi saran dan memfasilitasi",
+                explanation: "Mediasi melibatkan mediator (pihak ketiga) yang netral hanya untuk memfasilitasi dan memberi saran, tanpa wewenang memaksa keputusan."
+            },
+            {
+                type: "PGB",
+                case: `**KASUS 20:** Karena diliputi rasa cemburu dan marah yang tidak terkontrol, Amir menghancurkan mobil temannya dengan sengaja. Tujuannya hanya satu: melampiaskan kemarahan dan memberikan kerugian pada temannya.`,
+                question: "Berdasarkan motivasi dan tujuannya, konflik yang dilakukan Amir menunjukkan ciri utama dari...",
+                options: [
+                    "Menghasilkan keputusan yang inovatif",
+                    "Muncul karena perbedaan gagasan",
+                    "Berlandaskan pada rasa dendam atau kebencian",
+                    "Mendorong penyesuaian norma secara damai",
+                    "Bertujuan menyatukan dua kelompok yang berbeda"
+                ],
+                answer: "Berlandaskan pada rasa dendam atau kebencian",
+                explanation: "Konflik Destruktif dipicu oleh emosi negatif seperti dendam, kebencian, dan bertujuan untuk menghancurkan lawan."
+            },
+        ];
+
+        let userAnswers = {}; // Untuk menyimpan jawaban pengguna
+
+        // Fungsi untuk merender tombol navigasi
+        function renderNav() {
+            const navTabs = document.getElementById('nav-tabs');
+            navTabs.innerHTML = '';
+            materials.forEach((item, index) => {
+                const button = document.createElement('button');
+                button.textContent = item.title;
+                button.id = `nav-${item.id}`;
+                button.className = 'tab-button text-sm lg:text-base px-3 py-2 lg:p-3 rounded-lg text-gray-600 hover:bg-sosiologi-light hover:text-sosiologi-primary transition duration-200 w-full text-left';
+                button.onclick = () => showContent(item.id);
+                navTabs.appendChild(button);
+            });
+        }
+
+        // Fungsi untuk menampilkan konten yang dipilih
+        function showContent(id) {
+            const contentDisplay = document.getElementById('content-display');
+            const selectedMaterial = materials.find(m => m.id === id);
+
+            // Perbarui konten
+            if (selectedMaterial) {
+                contentDisplay.innerHTML = selectedMaterial.content;
+            } else {
+                contentDisplay.innerHTML = '<p class="content-card text-red-500">Materi tidak ditemukan.</p>';
+            }
+
+            // Perbarui status 'active' pada tombol navigasi
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`nav-${id}`).classList.add('active');
+
+            // Jika konten yang ditampilkan adalah kuis, render soal
+            if (id === 'latihan') {
+                renderQuiz();
+            } else {
+                // Sembunyikan hasil kuis jika bukan tab kuis
+                const resultDiv = document.getElementById('quiz-result');
+                if (resultDiv) resultDiv.classList.add('hidden');
+                // Sembunyikan tombol submit kuis
+                const submitBtn = document.getElementById('submit-quiz-btn');
+                if (submitBtn) submitBtn.classList.add('hidden');
+            }
+        }
+
+        // Fungsi untuk merender kuis/latihan soal
+        function renderQuiz() {
+            const quizContainer = document.getElementById('quiz-container');
+            const submitBtn = document.getElementById('submit-quiz-btn');
+            
+            quizContainer.innerHTML = '';
+            submitBtn.classList.remove('hidden'); // Tampilkan tombol submit
+
+            questions.forEach((q, index) => {
+                const qIndex = index + 1;
+                const questionDiv = document.createElement('div');
+                questionDiv.id = `question-${qIndex}`;
+                questionDiv.className = 'p-5 bg-white rounded-xl shadow-md border border-red-200';
+                
+                // Tambahkan kasus jika ada
+                let caseHtml = q.case ? `<div class="p-3 mb-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500 text-sm text-gray-800">${q.case}</div>` : '';
+
+                let optionsHtml = '';
+                let instruction = '';
+
+                if (q.type === "PGB") {
+                    instruction = '<span class="text-red-600 font-semibold">(PILIH SATU JAWABAN TEPAT)</span>';
+                    optionsHtml = q.options.map((option, optIndex) => `
+                        <button 
+                            class="quiz-option pgb-option" 
+                            data-question="${qIndex}" 
+                            data-option="${option}"
+                            onclick="selectPGBOption(${qIndex}, '${option.replace(/'/g, "\\'")}')"
+                        >
+                            ${String.fromCharCode(65 + optIndex)}. ${option}
+                        </button>
+                    `).join('');
+                } else if (q.type === "MCMA") {
+                    instruction = '<span class="text-red-600 font-semibold">(PILIH SEMUA JAWABAN YANG BENAR)</span>';
+                    optionsHtml = q.options.map((option, optIndex) => `
+                        <button 
+                            class="quiz-option mcma-option" 
+                            data-question="${qIndex}" 
+                            data-option="${option}"
+                            onclick="selectMCMAOption(${qIndex}, event.target, '${option.replace(/'/g, "\\'")}')"
+                        >
+                            ${String.fromCharCode(65 + optIndex)}. ${option}
+                        </button>
+                    `).join('');
+                } else if (q.type === "Categorical") {
+                    instruction = '<span class="text-red-600 font-semibold">(TENTUKAN BENAR ATAU SALAH)</span>';
+                    
+                    optionsHtml = `
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-indigo-50">
+                                    <tr>
+                                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-3/5">Pernyataan</th>
+                                        <th class="px-3 py-2 text-center text-xs font-medium text-gray-700 uppercase tracking-wider w-1/5">Benar</th>
+                                        <th class="px-3 py-2 text-center text-xs font-medium text-gray-700 uppercase tracking-wider w-1/5">Salah</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200" id="categorical-options-${qIndex}">
+                                    ${q.statements.map((stmt, stmtIndex) => `
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-3 py-2 whitespace-normal text-sm font-medium text-gray-900">${stmtIndex + 1}. ${stmt.text}</td>
+                                            <td class="px-3 py-2 text-center">
+                                                <button 
+                                                    class="categorical-option border-green-500 text-green-700 hover:bg-green-100" 
+                                                    data-statement="${stmtIndex}" 
+                                                    data-value="true"
+                                                    onclick="selectCategoricalOption(${qIndex}, ${stmtIndex}, true, event.target)">
+                                                    Benar
+                                                </button>
+                                            </td>
+                                            <td class="px-3 py-2 text-center">
+                                                <button 
+                                                    class="categorical-option border-red-500 text-red-700 hover:bg-red-100" 
+                                                    data-statement="${stmtIndex}" 
+                                                    data-value="false"
+                                                    onclick="selectCategoricalOption(${qIndex}, ${stmtIndex}, false, event.target)">
+                                                    Salah
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                    // Initialize userAnswers for categorical type
+                    userAnswers[qIndex] = q.statements.map(() => null);
+                }
+
+                questionDiv.innerHTML = `
+                    ${caseHtml}
+                    <p class="font-bold text-lg text-sosiologi-dark mb-3">Soal ${qIndex} ${instruction}:</p>
+                    <p class="text-gray-700 mb-3">${q.type !== 'Categorical' ? q.question : ''}</p>
+                    <div id="options-${qIndex}">${optionsHtml}</div>
+                    <p id="feedback-${qIndex}" class="mt-2 text-sm italic hidden"></p>
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+            // Reset jawaban dan tampilan, kecuali untuk inisialisasi MCMA/Categorical di atas
+            if (Object.keys(userAnswers).length === 0) userAnswers = {}; 
+        }
+
+        // Fungsi untuk memilih PGB (Pilihan Ganda Biasa)
+        function selectPGBOption(qIndex, selectedOption) {
+            userAnswers[qIndex] = selectedOption;
+            
+            document.querySelectorAll(`#options-${qIndex} .pgb-option`).forEach(btn => {
+                btn.classList.remove('bg-indigo-100', 'border-indigo-500');
+            });
+
+            const selectedBtn = document.querySelector(`#options-${qIndex} button[data-option="${selectedOption.replace(/'/g, "\\'")}"]`);
+            if (selectedBtn) {
+                selectedBtn.classList.add('bg-indigo-100', 'border-indigo-500');
+            }
+        }
+
+        // Fungsi untuk memilih MCMA (Multiple Choice Multiple Answer)
+        function selectMCMAOption(qIndex, targetButton, selectedOption) {
+            if (!userAnswers[qIndex] || !Array.isArray(userAnswers[qIndex])) {
+                userAnswers[qIndex] = [];
+            }
+            
+            const currentAnswers = userAnswers[qIndex];
+            const optionIndex = currentAnswers.indexOf(selectedOption);
+
+            if (optionIndex > -1) {
+                currentAnswers.splice(optionIndex, 1);
+                targetButton.classList.remove('mcma-selected');
+            } else {
+                currentAnswers.push(selectedOption);
+                targetButton.classList.add('mcma-selected');
+            }
+            userAnswers[qIndex] = currentAnswers;
+        }
+
+        // Fungsi untuk memilih Jawaban Kategori
+        function selectCategoricalOption(qIndex, stmtIndex, selectedValue, targetButton) {
+            if (!userAnswers[qIndex] || !Array.isArray(userAnswers[qIndex])) {
+                userAnswers[qIndex] = questions[qIndex - 1].statements.map(() => null);
+            }
+            
+            // Konversi nilai boolean menjadi string 'true' atau 'false' untuk penyimpanan
+            userAnswers[qIndex][stmtIndex] = selectedValue; 
+            
+            // Reset visual untuk baris (statement) yang dipilih
+            const row = targetButton.closest('tr');
+            row.querySelectorAll('.categorical-option').forEach(btn => {
+                btn.classList.remove('selected');
+                btn.classList.remove('bg-sosiologi-primary', 'text-white', 'border-sosiologi-primary');
+                btn.classList.add('border-gray-300');
+            });
+
+            // Tandai opsi yang dipilih
+            targetButton.classList.add('selected', 'bg-sosiologi-primary', 'text-white', 'border-sosiologi-primary');
+        }
+
+        // Fungsi untuk memeriksa dan menampilkan hasil kuis
+        function submitQuiz() {
+            let score = 0;
+            const quizResult = document.getElementById('quiz-result');
+            const submitBtn = document.getElementById('submit-quiz-btn');
+
+            questions.forEach((q, index) => {
+                const qIndex = index + 1;
+                const userAnswer = userAnswers[qIndex] || (q.type === 'MCMA' ? [] : (q.type === 'Categorical' ? q.statements.map(() => null) : null));
+                const correctAnswer = q.answer || q.statements;
+                const feedbackEl = document.getElementById(`feedback-${qIndex}`);
+                
+                let isCorrect = false;
+
+                // Nonaktifkan semua tombol klik
+                document.querySelectorAll(`#options-${qIndex} button`).forEach(btn => {
+                    btn.onclick = null;
+                    btn.classList.add('cursor-default');
+                });
+
+                if (q.type === "PGB") {
+                    // Logika PGB
+                    isCorrect = (userAnswer === correctAnswer);
+                    
+                    document.querySelectorAll(`#options-${qIndex} .pgb-option`).forEach(btn => {
+                        const optionText = btn.getAttribute('data-option');
+                        btn.classList.remove('bg-indigo-100', 'border-indigo-500');
+
+                        if (optionText === correctAnswer) {
+                            btn.classList.add('correct');
+                        } else if (optionText === userAnswer && !isCorrect) {
+                            btn.classList.add('incorrect');
+                        }
+                    });
+
+                } else if (q.type === "MCMA") {
+                    // Logika MCMA
+                    const sortedUserAnswers = userAnswer.slice().sort();
+                    const sortedCorrectAnswers = correctAnswer.slice().sort();
+
+                    isCorrect = (
+                        sortedUserAnswers.length === sortedCorrectAnswers.length &&
+                        sortedUserAnswers.every((val, i) => val === sortedCorrectAnswers[i])
+                    );
+
+                    document.querySelectorAll(`#options-${qIndex} .mcma-option`).forEach(btn => {
+                        const option = btn.getAttribute('data-option');
+                        const isUserSelected = userAnswer.includes(option);
+                        const isActualCorrect = correctAnswer.includes(option);
+
+                        btn.classList.remove('mcma-selected');
+
+                        if (isActualCorrect) {
+                            btn.classList.add('correct');
+                        }
+                        if (isUserSelected && !isActualCorrect) {
+                            btn.classList.add('incorrect'); 
+                        }
+                    });
+
+                } else if (q.type === "Categorical") {
+                    // Logika Categorical (Semua 3 harus benar)
+                    let correctCount = 0;
+                    let allStatementsCorrect = true;
+                    
+                    q.statements.forEach((stmt, stmtIndex) => {
+                        const userVal = userAnswer[stmtIndex];
+                        const correctVal = stmt.answer; // boolean true/false
+
+                        const isStatementCorrect = (userVal === correctVal);
+                        
+                        // Tandai visual di tabel
+                        const row = document.querySelector(`#categorical-options-${qIndex} tr:nth-child(${stmtIndex + 1})`);
+                        
+                        row.querySelectorAll('.categorical-option').forEach(btn => {
+                            const btnValue = btn.getAttribute('data-value') === 'true'; // Konversi kembali ke boolean
+                            btn.classList.remove('selected', 'bg-sosiologi-primary', 'text-white', 'border-sosiologi-primary');
+                            
+                            // Tampilkan jawaban BENAR sebenarnya (hijau)
+                            if (btnValue === correctVal) {
+                                btn.classList.add('correct');
+                            }
+                            
+                            // Tampilkan jawaban user yang SALAH (merah)
+                            if (btnValue === userVal && !isStatementCorrect) {
+                                btn.classList.add('incorrect');
+                            }
+                        });
+
+
+                        if (isStatementCorrect) {
+                            correctCount++;
+                        } else {
+                            allStatementsCorrect = false;
+                        }
+                    });
+
+                    isCorrect = allStatementsCorrect;
+                    
+                    if (!isCorrect) {
+                        feedbackEl.innerHTML = `Jawaban Anda Salah. Anda hanya menjawab benar ${correctCount} dari 3 pernyataan.<br><br><strong>Penjelasan per Pernyataan:</strong>`;
+                        q.statements.forEach((stmt, stmtIndex) => {
+                            const userVal = userAnswer[stmtIndex];
+                            const correctVal = stmt.answer;
+                            const status = userVal === correctVal ? 'Benar' : 'Salah';
+                            const correctText = correctVal ? 'Benar' : 'Salah';
+                            feedbackEl.innerHTML += `<br>- Pernyataan ${stmtIndex + 1} (${status}). Jawaban seharusnya ${correctText}. (${stmt.explanation})`;
+                        });
+                    }
+                }
+                
+                if (isCorrect) {
+                    score++;
+                    feedbackEl.textContent = 'Jawaban Anda Benar!';
+                    feedbackEl.className = 'mt-2 text-sm italic text-green-600 font-semibold p-2 bg-green-50 rounded-md';
+                } else if (q.type !== 'Categorical') {
+                    // Tampilkan Feedback untuk PGB/MCMA yang salah
+                    const correctAnswersText = q.type === "MCMA" ? correctAnswer.join(", ") : correctAnswer;
+                    feedbackEl.textContent = `Jawaban Anda Salah. Jawaban yang benar adalah: ${correctAnswersText}. Penjelasan: ${q.explanation}`;
+                    feedbackEl.className = 'mt-2 text-sm italic text-red-600 font-semibold p-2 bg-red-50 rounded-md';
+                }
+                feedbackEl.classList.remove('hidden');
+
+            });
+
+            // Tampilkan hasil akhir
+            const totalQuestions = questions.length;
+            const percentage = (score / totalQuestions) * 100;
+            quizResult.classList.remove('hidden');
+            quizResult.className = `mt-6 p-6 rounded-lg ${percentage >= 70 ? 'bg-green-100 border-green-500' : 'bg-red-100 border-red-500'} border-2`;
+            quizResult.innerHTML = `
+                <h3 class="text-xl font-bold ${percentage >= 70 ? 'text-green-800' : 'text-red-800'}">Hasil Kuis Anda</h3>
+                <p class="text-lg mt-2">Skor: <span class="font-extrabold">${score} / ${totalQuestions}</span></p>
+                <p class="text-lg">Persentase: <span class="font-extrabold">${percentage.toFixed(0)}%</span></p>
+                <p class="mt-3 ${percentage >= 70 ? 'text-green-700' : 'text-red-700'}">
+                    ${percentage >= 70 ? 'Kerja bagus! Pemahaman Anda tentang materi ini sangat baik.' : 'Terus semangat! Perhatikan kembali materi yang masih kurang dipahami.'}
+                </p>
+            `;
+            
+            submitBtn.textContent = 'Coba Lagi? (Reset Kuis)';
+            submitBtn.onclick = () => {
+                showContent('latihan'); // Muat ulang tab kuis
+                quizResult.classList.add('hidden'); // Sembunyikan hasil
+            };
+        }
+
+        // Inisialisasi aplikasi saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNav();
+            // Tampilkan materi pertama (Pengertian Konflik) secara default
+            showContent(materials[0].id); 
+        });
+    </script>
+</body>
+</html>
